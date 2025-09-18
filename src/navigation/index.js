@@ -20,7 +20,7 @@ function AppNavigation() {
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
+        <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
         <Stack.Screen name="MyFood" component={MyRecipeScreen} />
         <Stack.Screen name="CustomRecipesScreen" component={CustomRecipesScreen} />
         <Stack.Screen name="RecipesFormScreen" component={RecipesFormScreen} />

@@ -42,7 +42,10 @@ export default function Recipes({ foods = [], categories = [] }) {
 
 const ArticleCard = ({ item, navigation }) => {
   const handlePress = () => {
-    navigation.navigate("RecipeDetailScreen", { recipe: item });
+      console.log('GO DETAIL:', item.recipeName); // should print on tap
+
+    navigation.navigate("RecipeDetailScreen", item); // ✅ pass the recipe object directly
+
   };
 
   return (
