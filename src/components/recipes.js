@@ -17,7 +17,9 @@ export default function Recipes({ foods = [], categories = [] }) {
   const navigation = useNavigation();
 
   const keyExtractor = (item, index) =>
-    item.idFood?.toString?.() || `${item.recipeName}-${index}`;
+  `${item.idFood || item.recipeId || "recipe"}-${index}`;
+
+
 
   const renderItem = ({ item }) => (
     <ArticleCard item={item} navigation={navigation} />
@@ -34,6 +36,7 @@ export default function Recipes({ foods = [], categories = [] }) {
           columnWrapperStyle={styles.row}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: hp(2) }}
+          scrollEnabled={false}          // ✅ add this
         />
       </View>
     </View>

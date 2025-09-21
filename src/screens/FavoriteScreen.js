@@ -29,50 +29,12 @@ export default function FavoriteScreen() {
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyText}>No favorite recipes yet!</Text>
-        {/* add back button */}
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{
-            backgroundColor: "#2563EB",
-            padding: 10,
-            borderRadius: 5,
-            marginTop: 10,
-            width: 100,
-            alignItems: "center ",
-          }}
-        >
-          <Text style={{ color: "#fff" }}>Go back</Text>
-        </TouchableOpacity>
       </View>
     );
   }
 
   return (
     <>
-      {/* Heading */}
-      <View testID="FavoriteRecipes">
-        <Text
-          style={{ fontSize: hp(3.8), marginTop: hp(4), marginLeft: 20 }}
-          className="font-semibold text-neutral-600"
-        >
-          My Favorite Recipes
-        </Text>
-      </View>
-    
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{
-          backgroundColor: "#2563EB",
-          padding: 10,
-          borderRadius: 5,
-          marginTop: 10,
-          width: 100,
-          alignItems: "center",
-          marginLeft: 20,
-        }}
-      >
-        <Text style={{ color: "#fff" }}>Go back</Text>
-      </TouchableOpacity>
 
      {/* Favorites Detail */}
           <FlatList

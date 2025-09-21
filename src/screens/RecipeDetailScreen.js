@@ -1,5 +1,5 @@
 import {View,Text,ScrollView,TouchableOpacity,Image,StyleSheet,} from "react-native";
-import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,7 +10,6 @@ import { toggleFavorite } from "../redux/favoritesSlice"; // Redux action
 
 export default function RecipeDetailScreen(props) {
   const recipe = props.route.params; // recipe object
-
   const dispatch = useDispatch();
   const favoriterecipes = useSelector(
     (state) => state.favorites.favoriterecipes
@@ -26,11 +25,13 @@ export default function RecipeDetailScreen(props) {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.scrollContent}
-    >
+   <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }} edges={["top", "left", "right"]}>
+
+   <ScrollView
+        style={{ flex: 1 }}
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+      >
         {/* ✅ Recipe Image */}
       <View style={styles.imageContainer} testID="imageContainer">
           <Image source={{ uri: recipe.recipeImage }} style={styles.recipeImage} resizeMode="cover" />
@@ -47,14 +48,9 @@ export default function RecipeDetailScreen(props) {
           </View>
         </View>
 
-        {/* Back Button and Favorite Button */}
+        {/* Favorite Button */}
         <View style={styles.topButtonsContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Text>Back</Text>
-          </TouchableOpacity>
+   
           <TouchableOpacity
             onPress={handleToggleFavorite}
             style={[
@@ -68,8 +64,7 @@ export default function RecipeDetailScreen(props) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.contentContainer}>
-          {/* ✅ Misc Info Row */}
+        <View style={styles.contentSetup}>
           <View style={styles.miscContainer} testID="miscContainer">
             <View style={styles.miscItem}>
               <Text style={styles.miscIcon}>⏱</Text>
@@ -90,17 +85,19 @@ export default function RecipeDetailScreen(props) {
               </Text>
             </View>
           </View>
+        </View>
+
 
           {/* Ingredients */}
-          <View style={styles.sectionContainer}>
+         <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Ingredients</Text>
             <View style={styles.ingredientsList} testID="ingredientsList">
-              {(recipe.ingredients).map((i) => (
-                <View key={i} style={styles.ingredientItem}>
+              {(recipe?.ingredients ?? []).map((ing, idx) => (
+                <View key={`${ing.ingredientName || 'ing'}-${idx}`} style={styles.ingredientItem}>
                   <View style={styles.ingredientBullet} />
                   <Text style={styles.ingredientText}>
-                    {/* {meal["strMeasure" + i]} {meal["strIngredient" + i]} */}
-                    {i.ingredientName} {i.measure}
+                    {ing.measure ? `${ing.measure} ` : ""}
+                    {ing.ingredientName || "Ingredient"}
                   </Text>
                 </View>
               ))}
@@ -117,8 +114,9 @@ export default function RecipeDetailScreen(props) {
 
        
             {/* recipe Description */}
-      </View>
+
     </ScrollView>
+ </SafeAreaView>
   );
 }
 
@@ -145,17 +143,11 @@ const styles = StyleSheet.create({
   topButtonsContainer: {
     width: "100%",
     position: "absolute",
+    left: 30,
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     paddingTop: hp(4),
   },
-  backButton: {
-    padding: 8,
-    borderRadius: 50,
-    marginLeft: wp(5),
-    backgroundColor: "white",
-  },
+
   favoriteButton: {
     padding: 8,
     borderRadius: 50,
@@ -206,31 +198,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 20,
   },
+
   recipeImage: {
     width: wp(98),
     height: hp(45),
     borderRadius: 20,
     marginTop: 4,
   },
-  topButtonsContainer: {
-    width: "100%",
-    position: "absolute",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: hp(4),
-  },
-  backButton: {
-    padding: 10,
-    borderRadius: 20,
-    backgroundColor: "#f0f0f0",
-    marginLeft: wp(5),
-  },
-  backButtonText: {
-    fontSize: hp(2),
-    color: "#333",
-    fontWeight: "bold",
-  },
+
   favoriteButton: {
     padding: 10,
     borderRadius: 20,

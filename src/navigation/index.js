@@ -16,15 +16,16 @@ function AppNavigation() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Welcome"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: true, headerTitleAlign: "center" }}
+        
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
-        <Stack.Screen name="MyFood" component={MyRecipeScreen} />
-        <Stack.Screen name="CustomRecipesScreen" component={CustomRecipesScreen} />
-        <Stack.Screen name="RecipesFormScreen" component={RecipesFormScreen} />
-        <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
+        <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} options={{ title: "Details" }}   />
+        <Stack.Screen name="MyFood" component={MyRecipeScreen}  options={{ title: "My recipes" }}  />
+        <Stack.Screen name="CustomRecipesScreen" component={CustomRecipesScreen} options={{ title: "M" }}  />
+        <Stack.Screen name="RecipesFormScreen" component={RecipesFormScreen} options={{ title: "Add a recipe" }}  />
+        <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} options={{ title: "Favorites" }}   />
       </Stack.Navigator>
     </NavigationContainer>
   );
