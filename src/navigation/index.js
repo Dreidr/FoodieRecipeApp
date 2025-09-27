@@ -1,6 +1,8 @@
-import * as React from "react";
+import React from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from "../screens/HomeScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import MyRecipeScreen from "../screens/MyRecipeScreen";
@@ -9,7 +11,11 @@ import RecipesFormScreen from "../screens/RecipesFormScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
 
-const Stack = createNativeStackNavigator();
+
+const Stack = (Platform.OS === 'ios' || Platform.OS === 'android')
+  ? createNativeStackNavigator()
+  : createStackNavigator();
+
 
 function AppNavigation() {
   return (
