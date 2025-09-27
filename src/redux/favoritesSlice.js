@@ -26,7 +26,6 @@ const favoritesSlice = createSlice({
     },
   },
 
-    // ... other reducers like addFavorite, toggleFavorite ...
     removeFavoriteByKey(state, action) {
       const key = action.payload;
       state.favoriterecipes = state.favoriterecipes.filter((r, idx) => {
