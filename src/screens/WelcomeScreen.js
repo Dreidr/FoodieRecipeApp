@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -34,6 +34,7 @@ export default function WelcomeScreen() {
       <StatusBar style="light" />
 
       {/* logo image with rings */}
+       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
       <Animated.View
         style={[styles.ring, { padding: ring2padding }]}
       >
@@ -46,6 +47,8 @@ export default function WelcomeScreen() {
           />
         </Animated.View>
       </Animated.View>
+      </TouchableOpacity>
+      
 
       {/* title and punchline */}
       <View style={styles.textContainer}>
