@@ -4,32 +4,38 @@ const initialState = {
   favoriterecipes: [],
 };
 
-// choose a stable unique key for each recipe
-const keyOf = (r) => r?.recipeId || r?.idFood || r?.id;
+// stable key helper (works for API + custom)
+const keyOf = (r) => r?.recipeId || r?.idFood || r?.id || r?.title;
 
 const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
     toggleFavorite: (state, action) => {
-      const recipe = action.payload;
-      const key = keyOf(recipe);
-      if (!key) return;
+      const incoming = action.payload;
+      const k = keyOf(incoming);
+      const ix = state.favoriterecipes.findIndex((f) => keyOf(f) === k);
 
-      const idx = state.favoriterecipes.findIndex((r) => keyOf(r) === key);
-      if (idx >= 0) {
-        // already saved -> remove
-        state.favoriterecipes.splice(idx, 1);
+      if (ix >= 0) {
+        // remove
+        state.favoriterecipes.splice(ix, 1);
       } else {
-        // not saved -> add
-        state.favoriterecipes.unshift(recipe);
+        // add
+        state.favoriterecipes.push(incoming);
       }
     },
-    clearFavorites: (state) => {
-      state.favoriterecipes = [];
-    },
   },
+
+    // ... other reducers like addFavorite, toggleFavorite ...
+    removeFavoriteByKey(state, action) {
+      const key = action.payload;
+      state.favoriterecipes = state.favoriterecipes.filter((r, idx) => {
+        const rKey = (r?.recipeId || r?.idFood || r?.id || r?.title || idx).toString();
+        return rKey !== key;
+      });
+    },
+  
 });
 
-export const { toggleFavorite, clearFavorites } = favoritesSlice.actions;
+export const { toggleFavorite } = favoritesSlice.actions;
 export default favoritesSlice.reducer;

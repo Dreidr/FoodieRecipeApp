@@ -106,11 +106,9 @@ const deleterecipe = async (index) => {
                 style={styles.recipeCard}
               >
 
-
-
                 <TouchableOpacity
                   testID="handlerecipeBtn"
-                  onPress={() => handlerecipeClick(recipe, index)}
+                      onPress={() => navigation.navigate("CustomRecipesScreen", { recipe })}
                   activeOpacity={0.9}
                 >
                   {/* Image */}
@@ -133,9 +131,14 @@ const deleterecipe = async (index) => {
 
                   {/* Title + Description */}
                   <Text style={styles.recipeTitle}>{recipe.title || "Untitled"}</Text>
-                  <Text style={styles.recipeDescription} testID="recipeDescp">
-                    {recipe.description || "No description"}
-                  </Text>
+                 <Text style={styles.recipeDescription} testID="recipeDescp">
+                  {recipe.description
+                    ? recipe.description.length > 50
+                      ? recipe.description.substring(0, 50) + "..."
+                      : recipe.description
+                    : "No description"}
+                </Text>
+
                 </TouchableOpacity>
 
                 {/* Edit and Delete Buttons */}
@@ -148,13 +151,11 @@ const deleterecipe = async (index) => {
                   </TouchableOpacity>
 
                <TouchableOpacity
-  style={styles.deleteButton}
-  onPress={() => deleterecipe(index)}
->
-  <Text style={styles.deleteButtonText}>Delete</Text>
-</TouchableOpacity>
-
-
+                  style={styles.deleteButton}
+                  onPress={() => deleterecipe(index)}
+                >
+                  <Text style={styles.deleteButtonText}>Delete</Text>
+                </TouchableOpacity>
 
                 </View>
               </View>
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     width: 300,
     alignSelf: "center", // ✅ center horizontally
     marginTop: hp(2),
-    marginBottom: hp(4), // ✅ add space below
+    marginBottom: hp(4), 
   },
 
   addButtonText: {
@@ -206,9 +207,9 @@ const styles = StyleSheet.create({
   },
   recipeCard: {
     width: 400,
-    height: 300,
+    height: 350,
     backgroundColor: "#fff",
-    padding: wp(3),
+    padding: wp(4),
     borderRadius: 8,
     marginBottom: hp(2),
     shadowColor: "#000",
@@ -216,6 +217,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
+    marginHorizontal: wp(2),  
+    marginBottom: hp(2),  
   },
   recipeImage: {
     width: 300,

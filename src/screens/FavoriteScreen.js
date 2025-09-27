@@ -38,34 +38,50 @@ export default function FavoriteScreen() {
 
      {/* Favorites Detail */}
           <FlatList
-            data={favoriteRecipesList}
-            keyExtractor={(item, idx) =>
-              (item.recipeId || item.idFood || idx).toString()
-            }
-            contentContainerStyle={styles.listContentContainer}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.cardContainer}
-                activeOpacity={0.9}
-                onPress={() => navigation.navigate("RecipeDetailScreen", item)} // pass item directly
-              >
-                <Image
-                  source={{ uri: item.recipeImage }}
-                  style={styles.recipeImage}
-                  resizeMode="cover"
-                />
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.recipeTitle} numberOfLines={1}>
-                    {item.recipeName}
-                  </Text>
-                  <Text style={{ color: "#6B7280", marginTop: 4 }} numberOfLines={1}>
-                    {item.recipeCategory || item.category || "—"}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+  data={favoriteRecipesList}
+  keyExtractor={(item, idx) =>
+    (item.recipeId || item.idFood || item.id || item.title || idx).toString()
+  }
+  contentContainerStyle={styles.listContentContainer}
+  showsVerticalScrollIndicator={false}
+  renderItem={({ item }) => {
+    const isApiItem = !!(item.recipeId || item.idFood);
+    const imageUri = item.recipeImage || item.strMealThumb || item.image || null;
+    const title = item.recipeName || item.strMeal || item.title || "Untitled";
+    const subtitle = item.recipeCategory || item.category || item.description || "—";
+
+    const handlePress = () => {
+      if (isApiItem) {
+        navigation.navigate("RecipeDetailScreen", item);
+      } else {
+        navigation.navigate("CustomRecipesScreen", { recipe: item });
+      }
+    };
+
+    return (
+      <TouchableOpacity
+        style={styles.cardContainer}
+        activeOpacity={0.9}
+        onPress={handlePress}
+      >
+        {imageUri ? (
+          <Image source={{ uri: imageUri }} style={styles.recipeImage} resizeMode="cover" />
+        ) : (
+          <View style={[styles.recipeImage, { alignItems: "center", justifyContent: "center", backgroundColor: "#eee" }]}>
+            <Text style={{ color: "#6B7280" }}>No image</Text>
+          </View>
+        )}
+        <View style={{ flex: 1 }}>
+          <Text style={styles.recipeTitle} numberOfLines={1}>{title}</Text>
+          <Text style={{ color: "#6B7280", marginTop: 4 }} numberOfLines={1}>
+            {subtitle}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }}
+/>
+
     </>
   );
 }

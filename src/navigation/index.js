@@ -23,7 +23,7 @@ function AppNavigation() {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} options={{ title: "Details" }}   />
         <Stack.Screen name="MyFood" component={MyRecipeScreen}  options={{ title: "My recipes" }}  />
-        <Stack.Screen name="CustomRecipesScreen" component={CustomRecipesScreen} options={{ title: "M" }}  />
+        <Stack.Screen name="CustomRecipesScreen" component={CustomRecipesScreen} options={{ title: "Custom recipe" }}  />
         <Stack.Screen name="RecipesFormScreen" component={RecipesFormScreen} options={{ title: "Add a recipe" }}  />
         <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} options={{ title: "Favorites" }}   />
       </Stack.Navigator>
