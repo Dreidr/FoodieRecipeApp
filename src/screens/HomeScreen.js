@@ -1,6 +1,6 @@
 
 import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useMemo,useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
@@ -10,7 +10,16 @@ import Categories from "../components/categories";
 import FoodItems from "../components/recipes";
 
 export default function HomeScreen() {
-  const [activeCategory, setActiveCategory] = useState("Chicken");
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
 
   // Hardcoded categories for news
   const [categories, setCategories] = useState([
@@ -700,10 +709,19 @@ export default function HomeScreen() {
     setActiveCategory(category);
   };
 
-  // Filter foods by active category during rendering
-  const filteredfoods = allFood.filter(
-    (food) => food.category === activeCategory
-  );
+const VISIBLE_COUNT = 10;
+
+const filteredfoods = useMemo(() => {
+  if (!activeCategory || activeCategory === "All") return allFood;
+  return allFood.filter((f) => f.category === activeCategory);
+}, [allFood, activeCategory]);
+
+const visibleFoods = useMemo(() => {
+  // if “All”, optionally shuffle before slicing
+  const source = activeCategory === "All" ? shuffle(filteredfoods) : filteredfoods;
+  return source.slice(0, VISIBLE_COUNT);
+}, [filteredfoods, activeCategory]);
+
 
   return (
     <View style={styles.container}>
@@ -728,18 +746,16 @@ export default function HomeScreen() {
           </Text>
         </View>
 
-        {/* Render Categories */}
-       <View testID="categoryList"> 
+          <View testID="categoryList">
         <Categories
           categories={categories}
           activeCategory={activeCategory}
           handleChangeCategory={handleChangeCategory}
         />
       </View>
-        
 
          <View testID="foodList">
-        <FoodItems foods={filteredfoods} categories={categories} />
+        <FoodItems foods={visibleFoods} categories={categories} />
       </View>
       </ScrollView>
     </View>
