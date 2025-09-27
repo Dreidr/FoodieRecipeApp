@@ -703,6 +703,21 @@ export default function HomeScreen() {
         }
       ],
     },
+      //custom added recipe to check if all other categories are working as expected
+          {
+        idFood: "15",
+        category: "Seafood",
+        recipeName: "Grilled Salmon",
+        recipeImage: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+        recipeId: "seafood_01",
+        recipeCategory: "Seafood",
+        recipeOrigin: "Japanese",
+        cookingDescription: "Simple salmon grilled with lemon and herbs.",
+        ingredients: [
+          { ingredientName: "Salmon", measure: "2 fillets" },
+          { ingredientName: "Lemon", measure: "1 sliced" }
+        ],
+      }
   ]);
 
   const handleChangeCategory = (category) => {
